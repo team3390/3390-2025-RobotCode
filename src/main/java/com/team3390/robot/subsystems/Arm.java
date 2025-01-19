@@ -10,7 +10,6 @@ import com.team3390.lib.drivers.TalonSRXCreator;
 import com.team3390.lib.drivers.TalonSRXCreator.Configuration;
 import com.team3390.robot.Constants;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
