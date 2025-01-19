@@ -10,6 +10,7 @@ import com.team3390.lib.drivers.TalonSRXCreator;
 import com.team3390.lib.drivers.TalonSRXCreator.Configuration;
 import com.team3390.robot.Constants;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
@@ -19,6 +20,7 @@ public class Arm extends SubsystemBase {
   private boolean isBreakMode = false;
   private final Configuration talonConfiguration = new Configuration();
   private final LazyTalonSRX armMotorMaster, armMotorSlave;
+  private final boolean bool;
 
   public synchronized static Arm getInstance(){
     if(instance == null){
@@ -32,6 +34,7 @@ public class Arm extends SubsystemBase {
     talonConfiguration.NEUTRAL_MODE = isBreakMode ? NeutralMode.Brake : NeutralMode.Coast;
     armMotorMaster = TalonSRXCreator.createTalon(Constants.ARM_MOTOR_MASTER_ID, talonConfiguration);
     armMotorSlave = TalonSRXCreator.createTalon(Constants.ARM_MOTOR_SLAVE_ID, talonConfiguration);
+    bool = true;
     
   }
 
