@@ -11,4 +11,6 @@ public final class Constants {
   public static final int JOYSTICK_LEFT_PORT = 0;
   public static final int JOYSTICK_RIGHT_PORT = 1;
   public static final int JOYSTICK_GAMEPAD_PORT = 2;
+  public static final int ELEVATOR_MOTOR_MASTER_ID = 4;
+  public static final int ELEVATOR_MOTOR_SLAVE_ID = 5;
 }
