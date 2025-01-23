@@ -10,6 +10,7 @@ import com.team3390.lib.drivers.TalonSRXCreator;
 import com.team3390.lib.drivers.TalonSRXCreator.Configuration;
 import com.team3390.robot.Constants;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase {
@@ -20,6 +21,7 @@ public class Elevator extends SubsystemBase {
 
   private final Configuration talonConfiguration = new Configuration();
   private final WPI_TalonSRX elevatorMotorMaster, elevatorMotorSlave;
+  private final Encoder elevatorEncoder;
 
   public synchronized static Elevator getInstance() {
     if(instance == null) {
@@ -32,11 +34,23 @@ public class Elevator extends SubsystemBase {
   public Elevator() {
     talonConfiguration.NEUTRAL_MODE = isBreakMode ? NeutralMode.Brake : NeutralMode.Coast;
     elevatorMotorMaster = TalonSRXCreator.createTalon(Constants.ELEVATOR_MOTOR_MASTER_ID, talonConfiguration);
-    elevatorMotorSlave = TalonSRXCreator.createCustomPermanentSlaveTalon(Constants.ELEVATOR_MOTOR_SLAVE_ID, Constants.ELEVATOR_MOTOR_MASTER_ID, talonConfiguration);
+    elevatorMotorSlave = TalonSRXCreator.createCustomPermanentSlaveTalon(Constants.ELEVATOR_MOTOR_SLAVE_ID,
+    Constants.ELEVATOR_MOTOR_MASTER_ID, talonConfiguration);
+    elevatorEncoder = new Encoder(Constants.ELEVATOR_ENCODER_ID[0], Constants.ELEVATOR_ENCODER_ID[1],
+    Constants.ELEVATOR_ENCODER_INVERTED, Constants.ELEVATOR_ENCODER_ENCODING_TYPE);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  public void encoderReset() {
+    elevatorEncoder.reset();
+  }
+
+  public void getAngle() {
+    elevatorEncoder.getRate();
+  }
+
 }
