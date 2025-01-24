@@ -5,7 +5,7 @@
 package com.team3390.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.team3390.lib.drivers.LazyTalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.team3390.lib.drivers.TalonSRXCreator;
 import com.team3390.lib.drivers.TalonSRXCreator.Configuration;
 import com.team3390.robot.Constants;
@@ -20,7 +20,7 @@ public class Drivetrain extends SubsystemBase {
   private boolean isBreakMode = false;
 
   private final Configuration talonConfiguration = new Configuration();
-  private final LazyTalonSRX leftMaster, rightMaster, leftSlave, rightSlave;
+  private final WPI_TalonSRX leftMaster, rightMaster, leftSlave, rightSlave;
   private final DifferentialDrive driveController;
 
   public synchronized static Drivetrain getInstance() {
