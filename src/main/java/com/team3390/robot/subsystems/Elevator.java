@@ -49,8 +49,18 @@ public class Elevator extends SubsystemBase {
     elevatorEncoder.reset();
   }
 
-  public void getAngle() {
-    elevatorEncoder.getRate();
+  public double encoderAngle() {
+    return elevatorEncoder.getRate();
+  }
+
+  public void setSpeed(double speed) {
+    if(speed != 0) {
+      elevatorMotorMaster.set(speed);
+    }
+  }
+
+  public void stopMotors() {
+    elevatorMotorMaster.stopMotor();
   }
 
 }
