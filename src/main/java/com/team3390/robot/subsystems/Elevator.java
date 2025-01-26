@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.team3390.lib.drivers.TalonSRXCreator;
 import com.team3390.lib.drivers.TalonSRXCreator.Configuration;
+import com.team3390.lib.math.PID;
 import com.team3390.robot.Constants;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -22,6 +23,7 @@ public class Elevator extends SubsystemBase {
   private final Configuration talonConfiguration = new Configuration();
   private final WPI_TalonSRX elevatorMotorMaster, elevatorMotorSlave;
   private final Encoder elevatorEncoder;
+  private final PID elevatorPID;
 
   public synchronized static Elevator getInstance() {
     if(instance == null) {
@@ -38,6 +40,8 @@ public class Elevator extends SubsystemBase {
     Constants.ELEVATOR_MOTOR_MASTER_ID, talonConfiguration);
     elevatorEncoder = new Encoder(Constants.ELEVATOR_ENCODER_ID[0], Constants.ELEVATOR_ENCODER_ID[1],
     Constants.ELEVATOR_ENCODER_INVERTED, Constants.ELEVATOR_ENCODER_ENCODING_TYPE);
+    elevatorPID = new PID(Constants.ELEVATOR_PID_KP, Constants.ELEVATOR_PID_KI, Constants.ELEVATOR_PID_KD, 
+    Constants.ELEVATOR_PID_TOLERANCE, Constants.ELEVATOR_PID_MAXOUT, Constants.ELEVATOR_PID_MINOUT);
   }
 
   @Override
@@ -61,6 +65,12 @@ public class Elevator extends SubsystemBase {
 
   public void stopMotors() {
     elevatorMotorMaster.stopMotor();
+  }
+
+  public void setElevatorPos(double input, double pos) {
+    elevatorPID.setSetpoint(pos);
+    double output = elevatorPID.output(elevatorPID.calculate(input, pos));
+    elevatorMotorMaster.set(output);
   }
 
 }
