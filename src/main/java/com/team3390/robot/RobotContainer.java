@@ -36,7 +36,7 @@ public class RobotContainer {
         () -> leftStick.getY(),
         () -> rightStick.getY()));
 
-        new Trigger(() -> gamepad.getRawButton(2)).whileTrue(autoL1Pos);
+        new Trigger(() -> gamepad.getRawButton(2)).onTrue(autoL1Pos);
 
     }
 
