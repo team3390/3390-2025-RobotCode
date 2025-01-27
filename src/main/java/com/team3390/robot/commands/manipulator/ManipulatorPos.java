@@ -29,8 +29,8 @@ public class ManipulatorPos extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(manipulator.encoderAngle() != pos) {
-      manipulator.setManipulatorPos(manipulator.encoderAngle(), pos);
+    if(manipulator.getEncoderAngle() != pos) {
+      manipulator.setManipulatorPos(manipulator.getEncoderAngle(), pos);
     }
   }
 

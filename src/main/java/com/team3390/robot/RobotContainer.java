@@ -22,6 +22,7 @@ public class RobotContainer {
     private final Drivetrain driveSubsystem = Drivetrain.getInstance();
     private final Elevator elevatorSubsystem = Elevator.getInstance();
     private final Manipulator manipulatorSubsystem = Manipulator.getInstance();
+    
     private final Joystick leftStick = new Joystick(Constants.JOYSTICK_LEFT_PORT);
     private final Joystick rightStick = new Joystick(Constants.JOYSTICK_RIGHT_PORT);
     private final Joystick gamepad = new Joystick(Constants.JOYSTICK_GAMEPAD_PORT);

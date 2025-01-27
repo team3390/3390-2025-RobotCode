@@ -19,6 +19,7 @@ public class Elevator extends SubsystemBase {
   private static Elevator instance;
 
   private boolean isBreakMode = false;
+  private double encoderAngle;
 
   private final Configuration talonConfiguration = new Configuration();
   private final WPI_TalonSRX elevatorMotorMaster, elevatorMotorSlave;
@@ -53,8 +54,12 @@ public class Elevator extends SubsystemBase {
     elevatorEncoder.reset();
   }
 
-  public double encoderAngle() {
-    return elevatorEncoder.getRate();
+  public void setEncoderAngle() {
+    this.encoderAngle = elevatorEncoder.getRate();
+  }
+
+  public double getEncoderAngle() {
+    return encoderAngle;
   }
 
   public void setSpeed(double speed) {

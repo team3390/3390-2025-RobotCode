@@ -19,6 +19,7 @@ public class Manipulator extends SubsystemBase {
   private static Manipulator instance;
 
   private boolean isBreakMode = false;
+  private double encoderAngle;
 
   private final Configuration talonConfiguration = new Configuration();
   private final WPI_TalonSRX pivotMotorMaster, pivotMotorSlave, intakeMotorMaster, intakeMotorSlave;
@@ -56,8 +57,12 @@ public class Manipulator extends SubsystemBase {
     manipulatorEncoder.reset();
   }
 
-  public double encoderAngle() {
-    return manipulatorEncoder.getRate();
+  public void setEncoderAngle() {
+    encoderAngle = manipulatorEncoder.getRate();
+  }
+
+  public double getEncoderAngle() {
+    return encoderAngle;
   }
 
   public void setPivotSpeed(double speed) {

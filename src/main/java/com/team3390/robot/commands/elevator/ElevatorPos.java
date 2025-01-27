@@ -28,8 +28,8 @@ public class ElevatorPos extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(elevator.encoderAngle() != pos) {
-      elevator.setElevatorPos(elevator.encoderAngle(), pos);
+    if(elevator.getEncoderAngle() != pos) {
+      elevator.setElevatorPos(elevator.getEncoderAngle(), pos);
     }
   }
 
