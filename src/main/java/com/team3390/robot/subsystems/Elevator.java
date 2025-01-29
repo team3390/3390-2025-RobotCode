@@ -20,6 +20,7 @@ public class Elevator extends SubsystemBase {
 
   private boolean isBreakMode = false;
   private double encoderAngle;
+  private boolean isAtBorder = false;
 
   private final Configuration talonConfiguration = new Configuration();
   private final WPI_TalonSRX elevatorMotorMaster, elevatorMotorSlave;
@@ -76,6 +77,15 @@ public class Elevator extends SubsystemBase {
     elevatorPID.setSetpoint(pos);
     double output = elevatorPID.output(elevatorPID.calculate(input, pos));
     elevatorMotorMaster.set(output);
+  }
+
+  public boolean atBorder() {
+    if(elevatorEncoder.getRate() == Constants.ELEVATOR_BORDER) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
 }

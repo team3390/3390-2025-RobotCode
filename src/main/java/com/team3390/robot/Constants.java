@@ -22,13 +22,14 @@ public final class Constants {
   public static final double ELEVATOR_PID_KP = 0.1;
   public static final double ELEVATOR_PID_KI = 0.1;
   public static final double ELEVATOR_PID_KD = 0.1;
-  public static final double ELEVATOR_PID_MAXOUT = 0.1;
-  public static final double ELEVATOR_PID_MINOUT = 0.1;
-  public static final double ELEVATOR_PID_TOLERANCE = 1;
+  public static final double ELEVATOR_PID_MAXOUT = 1;
+  public static final double ELEVATOR_PID_MINOUT = -1;
+  public static final double ELEVATOR_PID_TOLERANCE = 10;
   public static final double ELEVATOR_L1_POS = 0;
   public static final double ELEVATOR_L2_POS = 1;
   public static final double ELEVATOR_L3_POS = 2;
   public static final double ELEVATOR_L4_POS = 3;
+  public static final double ELEVATOR_BORDER = 5;
 
   public static final int MANIPULATOR_PIVOT_MOTOR_MASTER_ID = 6;
   public static final int MANIPULATOR_PIVOT_MOTOR_SLAVE_ID = 7;
@@ -40,9 +41,9 @@ public final class Constants {
   public static final double MANIPULATOR_PID_KP = 0.1;
   public static final double MANIPULATOR_PID_KI = 0.1;
   public static final double MANIPULATOR_PID_KD = 0.1;
-  public static final double MANIPULATOR_PID_MAXOUT = 0.1;
-  public static final double MANIPULATOR_PID_MINOUT = 0.1;
-  public static final double MANIPULATOR_PID_TOLERANCE = 1;
+  public static final double MANIPULATOR_PID_MAXOUT = 1;
+  public static final double MANIPULATOR_PID_MINOUT = -1;
+  public static final double MANIPULATOR_PID_TOLERANCE = 10;
   public static final double MANIPULATOR_L1_POS = 0;
   public static final double MANIPULATOR_L2_POS = 1;
   public static final double MANIPULATOR_L3_POS = 2;
