@@ -39,6 +39,6 @@ public class ElevatorUp extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return elevator.atBorder();
+    return elevator.AtTop();
   }
 }

@@ -11,6 +11,7 @@ import com.team3390.lib.drivers.TalonSRXCreator.Configuration;
 import com.team3390.lib.math.PID;
 import com.team3390.robot.Constants;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -20,12 +21,15 @@ public class Elevator extends SubsystemBase {
 
   private boolean isBreakMode = false;
   private double encoderAngle;
-  private boolean isAtBorder = false;
+  private boolean isAtTop;
+  private boolean isAtBottom;
 
   private final Configuration talonConfiguration = new Configuration();
   private final WPI_TalonSRX elevatorMotorMaster, elevatorMotorSlave;
   private final Encoder elevatorEncoder;
   private final PID elevatorPID;
+  private final DigitalInput bottomSwitch = new DigitalInput(Constants.ELEVATOR_BOTTOM_SWITCH_ID);
+  private final DigitalInput topSwitch = new DigitalInput(Constants.ELEVATOR_TOP_SWITCH_ID);
 
   public synchronized static Elevator getInstance() {
     if(instance == null) {
@@ -55,8 +59,9 @@ public class Elevator extends SubsystemBase {
     elevatorEncoder.reset();
   }
 
-  public void setEncoderAngle() {
-    this.encoderAngle = elevatorEncoder.getRate();
+  public void setEncoderAngle(double angle) {
+    angle = elevatorEncoder.getRate();
+    this.encoderAngle = angle;
   }
 
   public double getEncoderAngle() {
@@ -80,12 +85,30 @@ public class Elevator extends SubsystemBase {
   }
 
   public boolean atBorder() {
-    if(elevatorEncoder.getRate() == Constants.ELEVATOR_BORDER) {
+    if(encoderAngle == Constants.ELEVATOR_BORDER) {
       return true;
     }
     else {
       return false;
     }
+  }
+
+  public void setTopSwitch(boolean isAtBorder) {
+    isAtBorder = topSwitch.get();
+    this.isAtTop = isAtBorder;
+  }
+
+  public boolean AtTop() {
+    return isAtTop;
+  }
+
+  public void setBottomSwitch(boolean isAtBorder) {
+    isAtBorder = bottomSwitch.get();
+    this.isAtBottom = isAtBorder;
+  }
+
+  public boolean AtBottom() {
+    return isAtBottom;
   }
 
 }
