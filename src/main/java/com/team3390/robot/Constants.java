@@ -50,4 +50,6 @@ public final class Constants {
   public static final double MANIPULATOR_L2_POS = 1;
   public static final double MANIPULATOR_L3_POS = 2;
   public static final double MANIPULATOR_L4_POS = 3;
+
+  public static final double LIMELIGHT_SHOOTER_SPEED_COEFFICIENT = 2.0;
 }
