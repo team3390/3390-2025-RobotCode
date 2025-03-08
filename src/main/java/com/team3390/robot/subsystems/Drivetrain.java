@@ -6,11 +6,13 @@ package com.team3390.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.studica.frc.AHRS;
 import com.team3390.lib.drivers.TalonSRXCreator;
 import com.team3390.lib.drivers.TalonSRXCreator.Configuration;
 import com.team3390.robot.Constants;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
@@ -21,7 +23,9 @@ public class Drivetrain extends SubsystemBase {
 
   private final Configuration talonConfiguration = new Configuration();
   private final WPI_TalonSRX leftMaster, rightMaster, leftSlave, rightSlave;
+  private final AHRS navX;
   private final DifferentialDrive driveController;
+
 
   public synchronized static Drivetrain getInstance() {
     if (instance == null) {
@@ -45,12 +49,16 @@ public class Drivetrain extends SubsystemBase {
     rightMaster.setInverted(Constants.DRIVE_RIGHT_INVERTED);
     rightSlave.setInverted(Constants.DRIVE_RIGHT_INVERTED);
 
+    navX = new AHRS(Constants.SENSOR_NAVX_PORT);
+
+
     driveController = new DifferentialDrive(leftMaster, rightMaster);
 
   }
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("heading", getHeading());
     // This method will be called once per scheduler run
   }
 
@@ -78,4 +86,18 @@ public class Drivetrain extends SubsystemBase {
   public void drive(double leftSpeed, double rightSpeed){
     driveController.tankDrive(leftSpeed, rightSpeed);
   }
+
+  public double getHeading() {
+    return navX.getAngle();
+  }
+
+  public boolean isAtAngle(double angle) {
+    if (angle == getHeading()) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
 }

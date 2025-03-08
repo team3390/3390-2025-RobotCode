@@ -28,8 +28,8 @@ public class Elevator extends SubsystemBase {
   private final WPI_TalonSRX elevatorMotorMaster, elevatorMotorSlave;
   private final Encoder elevatorEncoder;
   private final PID elevatorPID;
-  private final DigitalInput bottomSwitch = new DigitalInput(Constants.ELEVATOR_BOTTOM_SWITCH_ID);
-  private final DigitalInput topSwitch = new DigitalInput(Constants.ELEVATOR_TOP_SWITCH_ID);
+  //private final DigitalInput bottomSwitch; 
+  //private final DigitalInput topSwitch; 
 
   public synchronized static Elevator getInstance() {
     if(instance == null) {
@@ -48,6 +48,8 @@ public class Elevator extends SubsystemBase {
     Constants.ELEVATOR_ENCODER_INVERTED, Constants.ELEVATOR_ENCODER_ENCODING_TYPE);
     elevatorPID = new PID(Constants.ELEVATOR_PID_KP, Constants.ELEVATOR_PID_KI, Constants.ELEVATOR_PID_KD, 
     Constants.ELEVATOR_PID_TOLERANCE, Constants.ELEVATOR_PID_MAXOUT, Constants.ELEVATOR_PID_MINOUT);
+    //bottomSwitch = new DigitalInput(Constants.ELEVATOR_BOTTOM_SWITCH_ID);
+    //topSwitch = new DigitalInput(Constants.ELEVATOR_TOP_SWITCH_ID);
   }
 
   @Override
@@ -93,7 +95,7 @@ public class Elevator extends SubsystemBase {
     }
   }
 
-  public void setTopSwitch(boolean isAtBorder) {
+  /*public void setTopSwitch(boolean isAtBorder) {
     isAtBorder = topSwitch.get();
     this.isAtTop = isAtBorder;
   }
@@ -110,5 +112,5 @@ public class Elevator extends SubsystemBase {
   public boolean AtBottom() {
     return isAtBottom;
   }
-
+*/
 }

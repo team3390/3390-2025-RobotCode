@@ -2,21 +2,24 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package com.team3390.robot.commands.elevator;
+package com.team3390.robot.commands.drive;
 
-import com.team3390.robot.subsystems.Elevator;
+import java.util.function.Supplier;
+
+import com.team3390.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ElevatorUp extends Command {
+public class TurnToAngle extends Command {
+  private final Drivetrain drivetrain;
+  private final Double angle;
+  /** Creates a new TurnToAngle. */
+  public TurnToAngle(Drivetrain drivetrain, double angle) {
+    this.drivetrain = drivetrain;
+    this.angle = angle;
+    addRequirements(drivetrain);
 
-  private final Elevator elevator;
-
-  /** Creates a new ElevatorUp. */
-  public ElevatorUp(Elevator elevator) {
-    this.elevator = elevator;
-    addRequirements(elevator);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,18 +30,18 @@ public class ElevatorUp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevator.setSpeed(1);
+    drivetrain.drive(-1, 1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    elevator.stopMotors();
+    drivetrain.stopMotors();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return drivetrain.isAtAngle(angle);
   }
 }
