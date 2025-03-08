@@ -12,6 +12,7 @@ import com.team3390.lib.math.PID;
 import com.team3390.robot.Constants;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Manipulator extends SubsystemBase {
@@ -50,6 +51,7 @@ public class Manipulator extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("manipulator encoder", encoderAngle);
     // This method will be called once per scheduler run
   }
 
@@ -89,6 +91,10 @@ public class Manipulator extends SubsystemBase {
     manipulatorPID.setSetpoint(pos);
     double output = manipulatorPID.output(manipulatorPID.calculate(input, pos));
     pivotMotorMaster.set(output);
+  }
+
+  public boolean atSetpoint() {
+    return manipulatorPID.atSetpoint();
   }
 
 }

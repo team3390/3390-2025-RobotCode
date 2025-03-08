@@ -25,7 +25,9 @@ public class TurnToAngle extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    drivetrain.resetGyro();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

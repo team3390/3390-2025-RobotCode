@@ -34,7 +34,8 @@ public final class Constants {
   public static final double ELEVATOR_L2_POS = 1;
   public static final double ELEVATOR_L3_POS = 2;
   public static final double ELEVATOR_L4_POS = 3;
-  public static final double ELEVATOR_BORDER = 5;
+  public static final double ELEVATOR_LOW_BORDER = 5;
+  public static final double ELEVATOR_HIGH_BORDER = 6;
 
   public static final int MANIPULATOR_PIVOT_MOTOR_MASTER_ID = 6;
   public static final int MANIPULATOR_PIVOT_MOTOR_SLAVE_ID = 7;

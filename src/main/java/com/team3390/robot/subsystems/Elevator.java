@@ -13,6 +13,7 @@ import com.team3390.robot.Constants;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase {
@@ -54,6 +55,7 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("elevator encoder", encoderAngle);
     // This method will be called once per scheduler run
   }
 
@@ -86,8 +88,21 @@ public class Elevator extends SubsystemBase {
     elevatorMotorMaster.set(output);
   }
 
-  public boolean atBorder() {
-    if(encoderAngle == Constants.ELEVATOR_BORDER) {
+  public boolean atSetpoint() {
+    return elevatorPID.atSetpoint();
+  }
+
+  public boolean atLowBorder() {
+    if(encoderAngle == Constants.ELEVATOR_LOW_BORDER) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  public boolean atHighBorder() {
+    if(encoderAngle == Constants.ELEVATOR_HIGH_BORDER) {
       return true;
     }
     else {

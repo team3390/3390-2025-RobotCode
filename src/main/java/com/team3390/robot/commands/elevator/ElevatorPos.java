@@ -42,6 +42,6 @@ public class ElevatorPos extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return elevator.atLowBorder() || elevator.atHighBorder() || elevator.atSetpoint();
   }
 }

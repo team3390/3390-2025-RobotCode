@@ -91,6 +91,10 @@ public class Drivetrain extends SubsystemBase {
     return navX.getAngle();
   }
 
+  public void resetGyro() {
+    navX.reset();
+  }
+
   public boolean isAtAngle(double angle) {
     if (angle == getHeading()) {
       return true;
