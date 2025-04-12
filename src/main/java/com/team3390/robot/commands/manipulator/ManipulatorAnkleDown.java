@@ -2,24 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package com.team3390.robot.commands.autonomus;
+package com.team3390.robot.commands.manipulator;
 
-import com.team3390.robot.subsystems.Drivetrain;
-import com.team3390.robot.subsystems.Limelight;
+import com.team3390.robot.subsystems.Manipulator2;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AutonomDrive extends Command {
+public class ManipulatorAnkleDown extends Command {
+  private final Manipulator2 manipulator;
 
-  private final Drivetrain drivetrain;
-  private final Limelight limelight;
-
-  /** Creates a new AutonomDrive. */
-  public AutonomDrive(Drivetrain drivetrain, Limelight limelight) {
-    this.drivetrain = drivetrain;
-    this.limelight = limelight;
-    addRequirements(drivetrain);
+  /** Creates a new ManipulatorPivotControl. */
+  public ManipulatorAnkleDown(Manipulator2 manipulator) {
+    this.manipulator = manipulator;
+    addRequirements(manipulator);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -30,18 +26,18 @@ public class AutonomDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(limelight.getZOutput(), limelight.getZOutput());
+    manipulator.setAnkleMotors(-0.3);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drivetrain.stopMotors();
+    manipulator.stopAnkleMotors();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return limelight.isZAtSetpoint();
+    return false;
   }
 }

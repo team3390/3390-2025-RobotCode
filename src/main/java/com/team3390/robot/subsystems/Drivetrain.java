@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.studica.frc.AHRS;
 import com.team3390.lib.drivers.TalonSRXCreator;
 import com.team3390.lib.drivers.TalonSRXCreator.Configuration;
+import com.team3390.lib.math.PID;
 import com.team3390.robot.Constants;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -24,8 +25,9 @@ public class Drivetrain extends SubsystemBase {
   private final Configuration talonConfiguration = new Configuration();
   private final WPI_TalonSRX leftMaster, rightMaster, leftSlave, rightSlave;
   private final AHRS navX;
-  private final DifferentialDrive driveController;
+  private final PID drivetrainPID;
 
+  private final DifferentialDrive tankDrive;
 
   public synchronized static Drivetrain getInstance() {
     if (instance == null) {
@@ -49,21 +51,23 @@ public class Drivetrain extends SubsystemBase {
     rightMaster.setInverted(Constants.DRIVE_RIGHT_INVERTED);
     rightSlave.setInverted(Constants.DRIVE_RIGHT_INVERTED);
 
+    tankDrive = new DifferentialDrive(leftMaster, rightMaster);
+
     navX = new AHRS(Constants.SENSOR_NAVX_PORT);
 
-
-    driveController = new DifferentialDrive(leftMaster, rightMaster);
-
+    drivetrainPID = new PID(Constants.DRIVETRAIN_PID_KD, Constants.DRIVETRAIN_PID_KI, Constants.DRIVETRAIN_PID_KD, 
+    Constants.DRIVETRAIN_PID_TOLERANCE, Constants.DRIVETRAIN_PID_MAXOUT, Constants.DRIVETRAIN_PID_MINOUT);
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("heading", getHeading());
+    SmartDashboard.putNumber("accel", getVeloity());
     // This method will be called once per scheduler run
   }
 
   public void stopMotors() {
-    driveController.stopMotor();
+    tankDrive.stopMotor();
   }
 
   public boolean isBreakMode() {
@@ -84,24 +88,33 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void drive(double leftSpeed, double rightSpeed){
-    driveController.tankDrive(leftSpeed, rightSpeed);
+    tankDrive.tankDrive(leftSpeed, rightSpeed);
   }
 
   public double getHeading() {
     return navX.getAngle();
   }
 
+  public double getVeloity() {
+    return navX.getWorldLinearAccelZ();
+  }
+
   public void resetGyro() {
     navX.reset();
   }
 
-  public boolean isAtAngle(double angle) {
-    if (angle == getHeading()) {
-      return true;
+  public void turnToAngle(double angle) {
+    drivetrainPID.setSetpoint(angle);
+    double input = getHeading();
+    if(input > 360) {
+      input = input-360;
     }
-    else {
-      return false;
-    }
+    double output = drivetrainPID.output(drivetrainPID.calculate(input, angle));
+    drive(-output, output);
+  }
+
+  public boolean isPIDAtSetPoint() {
+    return drivetrainPID.atSetpoint();
   }
 
 }

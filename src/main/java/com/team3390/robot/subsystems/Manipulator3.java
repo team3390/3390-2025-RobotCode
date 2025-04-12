@@ -12,26 +12,26 @@ import com.team3390.robot.Constants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Manipulator extends SubsystemBase {
+public class Manipulator3 extends SubsystemBase {
 
-  private static Manipulator instance;
+  private static Manipulator3 instance;
 
   private boolean isBreakMode = true;
 
   private final Configuration talonConfiguration = new Configuration();
-  private final WPI_TalonSRX pivotMotor;
+  private final WPI_TalonSRX intakeMotor;
 
-  public synchronized static Manipulator getInstance(){
+  public synchronized static Manipulator3 getInstance(){
     if(instance == null) {
-      instance = new Manipulator();
+      instance = new Manipulator3();
     }
     return instance;
   }
 
-  /** Creates a new Manipulator. */
-  public Manipulator() {
+  /** Creates a new Manipulator3. */
+  public Manipulator3() {
     talonConfiguration.NEUTRAL_MODE = isBreakMode ? NeutralMode.Brake : NeutralMode.Coast;
-    pivotMotor = TalonSRXCreator.createTalon(Constants.MANIPULATOR_PIVOT_MOTOR_ID, talonConfiguration);
+    intakeMotor = TalonSRXCreator.createTalon(Constants.MANIPULATOR_INTAKE_MOTOR_ID, talonConfiguration);
   }
 
   @Override
@@ -39,14 +39,13 @@ public class Manipulator extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setPivotSpeed(double speed) {
+  public void setIntakeMotors(double speed) {
     if(speed != 0) {
-      pivotMotor.set(speed);
+      intakeMotor.set(speed);
     }
   }
 
-  public void stopPivotMotors() {
-    pivotMotor.stopMotor();
+  public void stopIntakeMotors() {
+    intakeMotor.stopMotor();
   }
-
 }
